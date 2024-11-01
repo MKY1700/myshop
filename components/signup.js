@@ -1,12 +1,12 @@
 import styles from "./sign.module.css"
-import { TextField, Fade } from "@mui/material"
+import { TextField, Fade, Button } from "@mui/material"
 import { use, useState } from "react";
 
 export default function Sign() {
     const [idValue, setIdvalue] = useState("");
     const [pwValue, setPwValue] = useState("");
+    const [userNameValue, setUserNameValue] = useState("");
     const [pwCheckValue, setPwCheckValue] = useState("")
-
     const [showPwFiled, setShowPwFiled] = useState(false);
     const [showPwCheckFiled, setShowPWCheckFiled] = useState(true);
 
@@ -63,12 +63,34 @@ export default function Sign() {
             setPwCheckHelpText("비밀번호가 일치하지 않습니다.")
         }
     }
+    const handleUserNameChange = (event) => {
+        const value = event.target.value
+        if (value.length > -1) {
+            setUserNameValue(value);
+        }
+    }
+    const handleSubmit = () => {
+        if(!idError && !pwError && !pwCheckError && !userNameValue > 0 && idValue,length > 0) {
+            alert("회원가입 완료")
+        } else {
+            alert("모든 입력란을 올바르게 채워주세요.")
+        }
+    }
 
     return (
         <>
             <div className={styles.wrapper}>
                 <h2 className={styles.head}>회원가입</h2>
                 <div className={styles.form}>
+                    <TextField
+                        id="username-required"
+                        label="Username"
+                        placeholder="닉네임"
+                        helperText="사용하실 닉네임을 입력해주세요."
+                        value={userNameValue}
+                        onChange={handleUserNameChange}
+                        fullWidth
+                    ></TextField>
                     <TextField
                         error={idError}
                         id="id-required"
@@ -109,6 +131,13 @@ export default function Sign() {
                             ></TextField>
                         </Fade>
                     )}
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        onClick={handleSubmit}
+                        style={{marginTop : '20px', width : "250px"}}
+                    >Continued</Button>
                 </div>
             </div>
         </>
